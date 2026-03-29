@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giras de Estudio — 21 Alumnos</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  background: #f8f7f4;
+  color: #1a1a2e;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* HEADER */
+.header {
+background: #1a1a2e;
+color: white;
+padding: 36px 32px 28px;
+border-bottom: 4px solid #c9a84c;
+}
+.header-badge {
+display: inline-block;
+background: rgba(255,255,255,0.12);
+border: 1px solid rgba(255,255,255,0.25);
+border-radius: 20px;
+padding: 3px 12px;
+font-size: 11px;
+font-weight: 600;
+letter-spacing: 1px;
+text-transform: uppercase;
+margin-bottom: 14px;
+}
+.header h1 {
+font-size: 32px;
+font-weight: 800;
+letter-spacing: -0.5px;
+line-height: 1.2;
+}
+.header h1 span { color: #f0d98a; }
+.header p {
+margin-top: 8px;
+opacity: 0.7;
+font-size: 13px;
+max-width: 580px;
+}
+
+/* MAIN */
+.main { max-width: 1180px; margin: 0 auto; padding: 32px 24px; }
+
+/* INFO PILLS */
+.pills { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; }
+.pill {
+background: white;
+border: 1px solid #e0ddd4;
+border-radius: 10px;
+padding: 14px 18px;
+flex: 1;
+min-width: 160px;
+}
+.pill.dark { background: #1a1a2e; border-color: #1a1a2e; }
+.pill .pill-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; color: #888; margin-bottom: 3px; }
+.pill.dark .pill-label { color: rgba(255,255,255,0.5); }
+.pill .pill-value { font-size: 20px; font-weight: 800; color: #1a1a2e; }
+.pill.dark .pill-value { color: #f0d98a; }
+.pill .pill-note { font-size: 11px; color: #888; margin-top: 2px; }
+.pill.dark .pill-note { color: rgba(255,255,255,0.45); }
+
+/* ALERT */
+.alert {
+background: #fff7ed;
+border: 1px solid #fed7aa;
+border-radius: 10px;
+padding: 13px 16px;
+font-size: 13px;
+color: #7c2d12;
+margin-bottom: 24px;
+line-height: 1.55;
+}
+
+/* SECTION TITLE */
+.section-title { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+.section-sub { font-size: 12px; color: #888; margin-bottom: 18px; }
+
+/* LEGEND */
+.legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; }
+.legend-dot { width: 14px; height: 14px; border-radius: 3px; }
+
+/* TABLE */
+.tbl-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid #e0ddd4; background: white; margin-bottom: 40px; }
+table { width: 100%; border-collapse: collapse; min-width: 860px; }
+thead tr { background: #1a1a2e; }
+thead th {
+color: white;
+padding: 12px 10px;
+text-align: left;
+font-size: 10px;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 0.7px;
+white-space: nowrap;
+}
+tbody tr { border-bottom: 1px solid #eee; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr.adj { background: #f0fdf4; }
+tbody tr:hover { background: #f5f5f0; }
+tbody tr.adj:hover { background: #dcfce7; }
+td { padding: 11px 10px; vertical-align: top; font-size: 13px; }
+
+.pname { font-weight: 700; font-size: 13px; }
+.pop { font-size: 11px; color: #888; margin-top: 2px; }
+
+.cuota { font-size: 17px; font-weight: 800; }
+.cuota.green { color: #0d7377; }
+.cuota.red { color: #b91c1c; }
+.vdia { font-size: 11px; color: #888; margin-top: 2px; }
+
+.tag {
+display: inline-block;
+border-radius: 5px;
+padding: 2px 7px;
+font-size: 11px;
+font-weight: 700;
+white-space: nowrap;
+}
+.tag-disco4 { background: #d1fae5; color: #065f46; }
+.tag-disco3 { background: #fef9c3; color: #854d0e; }
+.tag-disco1 { background: #ffedd5; color: #9a3412; }
+.tag-fix { background: #ede9fe; color: #5b21b6; }
+.tag-adj { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+
+.lib { display: inline-block; background: #fef9c3; color: #854d0e; border-radius: 4px; padding: 1px 6px; font-size: 11px; font-weight: 700; }
+
+/* VERDICTS */
+.verdicts { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-bottom: 32px; }
+.verdict {
+border-radius: 12px;
+padding: 22px;
+border: 1px solid #e0ddd4;
+}
+.verdict.gold { background: #fffbeb; border-color: #f0d98a; border-top: 4px solid #c9a84c; }
+.verdict.teal { background: #e0f4f4; border-color: #a7d8d8; border-top: 4px solid #0d7377; }
+.verdict.purple { background: #f3ebfc; border-color: #c4a0f0; border-top: 4px solid #7f3fbf; }
+.verdict .emoji { font-size: 28px; margin-bottom: 6px; display: block; }
+.verdict .vtitle { font-size: 17px; font-weight: 800; margin-bottom: 4px; }
+.verdict .vwinner {
+display: inline-block;
+border-radius: 20px;
+padding: 2px 11px;
+font-size: 11px;
+font-weight: 700;
+margin-bottom: 10px;
+color: white;
+}
+.verdict.gold .vwinner { background: #c9a84c; }
+.verdict.teal .vwinner { background: #0d7377; }
+.verdict.purple .vwinner { background: #7f3fbf; }
+.verdict p { font-size: 13px; line-height: 1.6; }
+.verdict strong { font-weight: 700; }
+
+/* DISCLAIMER */
+.disclaimer {
+background: #f5f5f0;
+border-radius: 10px;
+padding: 16px 20px;
+font-size: 12px;
+color: #666;
+line-height: 1.7;
+}
+.disclaimer strong { color: #1a1a2e; }
+</style>
+
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">&#127979; Evaluación Ajustada · 21 Alumnos Confirmados</div>
+  <h1>Precios ajustados para<br><span>tu curso de 21 alumnos</span></h1>
+  <p>Raitrai y Atui aplican sus tramos por cantidad de pasajeros. Funtour mantiene precio único sin importar el grupo.</p>
+</div>
+
+<div class="main">
+
+  <div class="pills">
+    <div class="pill dark">
+      <div class="pill-label">Alumnos confirmados</div>
+      <div class="pill-value">21 pagados</div>
+      <div class="pill-note">+ 2 liberados en todos los paquetes</div>
+    </div>
+    <div class="pill">
+      <div class="pill-label">Funtour</div>
+      <div class="pill-value">Sin cambio</div>
+      <div class="pill-note">Precio único sin mínimo de pax</div>
+    </div>
+    <div class="pill">
+      <div class="pill-label">Raitrai — tramo activo</div>
+      <div class="pill-value">20–22 pax</div>
+      <div class="pill-note">2 pasajeros liberados</div>
+    </div>
+    <div class="pill">
+      <div class="pill-label">Atui — tramo activo</div>
+      <div class="pill-value">25–21 pax</div>
+      <div class="pill-note">2 pasajeros liberados</div>
+    </div>
+  </div>
+
+  <div class="alert">
+    &#9888;&#65039; <strong>Sobre los liberados:</strong> Con 21 pagados, Raitrai y Atui otorgan <strong>2 pasajeros liberados</strong> (adultos acompañantes sin costo). Funtour también otorga 2 liberados por su regla de 1 cada 10 pagados.
+  </div>
+
+  <div class="section-title">Tabla Comparativa — 21 Alumnos</div>
+  <div class="section-sub">Ordenada de menor a mayor cuota mensual. USD convertido a $950 CLP.</div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#d1fae5;border:1px solid #a7f3d0;"></div>
+      Precio ajustado para 21 pax
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#ede9fe;border:1px solid #c4a0f0;"></div>
+      Precio fijo (no varía con cantidad)
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Paquete</th>
+          <th>Destino</th>
+          <th>Días/Noches</th>
+          <th>Precio Total pp.</th>
+          <th>Cuota ÷20</th>
+          <th>$/Día</th>
+          <th>Liberados</th>
+          <th>Discos</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+
+```
+    <tr>
+      <td>1</td>
+      <td><div class="pname">Pucón Terrestre</div><div class="pop">Funtour · 6D/5N</div></td>
+      <td>Pucón, Chile</td>
+      <td>6d / 5n</td>
+      <td>$730.000</td>
+      <td><div class="cuota green">$36.500</div><div class="vdia">$122k/día</div></td>
+      <td>$122.000</td>
+      <td><span class="lib">2 lib.</span></td>
+      <td><span class="tag tag-disco1">1 disco</span></td>
+      <td><span class="tag tag-fix">Precio fijo</span></td>
+    </tr>
+
+    <tr>
+      <td>2</td>
+      <td><div class="pname">Pucón Aéreo</div><div class="pop">Funtour · 5D/4N</div></td>
+      <td>Pucón, Chile</td>
+      <td>5d / 4n</td>
+      <td>$815.000</td>
+      <td><div class="cuota green">$40.750</div><div class="vdia">$163k/día</div></td>
+      <td>$163.000</td>
+      <td><span class="lib">2 lib.</span></td>
+      <td><span class="tag tag-disco1">1 disco</span></td>
+      <td><span class="tag tag-fix">Precio fijo</span></td>
+    </tr>
+
+    <tr>
+      <td>3</td>
+      <td><div class="pname">Bariloche Terrestre Charter</div><div class="pop">Funtour · 9D/8N Bus Compartido</div></td>
+      <td>Bariloche + Pucón regreso</td>
+      <td>9d / 8n</td>
+      <td>$999.000</td>
+      <td><div class="cuota green">$49.950</div><div class="vdia">$111k/día</div></td>
+      <td>$111.000</td>
+      <td><span class="lib">2 lib.</span></td>
+      <td><span class="tag tag-disco4">4 discos</span></td>
+      <td><span class="tag tag-fix">Precio fijo</span></td>
+    </tr>
+
+    <tr class="adj">
+      <td>4</td>
+      <td><div class="pname">Bariloche + Sur Terrestre</div><div class="pop">Atui · T70026 — tramo 25–21</div></td>
+      <td>Puerto Varas + Bariloche</td>
+      <td>7d / 6n</td>
+      <td>$1.089.000</td>
+      <td><div class="cuota red">$54.450</div><div class="vdia">$156k/día</div></td>
+      <td>$156.000</td>
+      <td><span class="lib">2 lib.</span></td>
+      <td><span class="tag tag-disco3">3 discos</span></td>
+      <td><span class="tag tag-adj">&#8593; Ajustado</span></td>
+    </tr>
+
+    <tr class="adj">
+      <td>5</td>
+      <td><div class="pname">Bariloche + Sur Aéreo</div><div class="pop">Atui · T70126 — tramo 25–21</div></td>
+      <td>Puerto Varas + Bariloche</td>
+      <td>6d / 5n</td>
+      <td>$1.099.000</td>
+      <td><div class="cuota red">$54.950</div><div class="vdia">$183k/día</div></td>
+      <td>$183.000</td>
+      <td><span class="lib">2 lib.</span></td>
+      <td><span class="tag tag-disco3">3 discos</span></td>
+      <td><span class="tag tag-adj">&#8593; Ajustado</span></td>
+    </tr>
+
+    <tr>
+      <td>6</td>
+      <td><div class="pname">Bariloche Vuelo Directo</div><div class="pop">Funtour · 7D/6N Chárter</div></td>
+      <td>Bariloche, Argentina</td>
+      <td>7d / 6n</td>
+      <td>$1.279.000</td>
+      <td><div class="cuota green">$63.950</div><div class="vdia">$183k/día</div></td>
+      <td>$183.000</td>
+      <td><span class="lib">2 lib.</span></td>
+      <td><span class="tag tag-disco4">4 discos</span></td>
+      <td><span class="tag tag-fix">Precio fijo</span></td>
+    </tr>
+
+    <tr class="adj">
+      <td>7</td>
+      <td><div class="pname">Bariloche Solo — Aéreo</div><div class="pop">Raitrai · IA_B27 — tramo 20–22</div></td>
+      <td>Bariloche, Argentina</td>
+      <td>6d / 5n</td>
+      <td>$1.444.950 <small>(USD$1.521)</small></td>
+      <td><div class="cuota red">$72.248</div><div class="vdia">$241k/día</div></td>
+      <td>$241.000</td>
+      <td><span class="lib">2 lib.</span></td>
+      <td><span class="tag tag-disco3">3 discos</span></td>
+      <td><span class="tag tag-adj">&#8593; Ajustado</span></td>
+    </tr>
+
+    <tr>
+      <td>8</td>
+      <td><div class="pname">Camboriú Vuelo Directo</div><div class="pop">Funtour · 8D/7N Chárter</div></td>
+      <td>Balneario Camboriú, Brasil</td>
+      <td>8d / 7n</td>
+      <td>$1.650.000</td>
+      <td><div class="cuota green">$82.500</div><div class="vdia">$206k/día</div></td>
+      <td>$206.000</td>
+      <td><span class="lib">2 lib.</span></td>
+      <td><span class="tag tag-disco4">4 discos</span></td>
+      <td><span class="tag tag-fix">Precio fijo</span></td>
+    </tr>
+
+    <tr class="adj">
+      <td>9</td>
+      <td><div class="pname">Camboriú Estudiantil</div><div class="pop">Atui · T77326 — tramo 25–21</div></td>
+      <td>Balneario Camboriú, Brasil</td>
+      <td>7d / 6n</td>
+      <td>$1.642.550 <small>(USD$1.729)</small></td>
+      <td><div class="cuota red">$82.128</div><div class="vdia">$235k/día</div></td>
+      <td>$235.000</td>
+      <td><span class="lib">2 lib.</span></td>
+      <td><span class="tag tag-disco3">3 discos</span></td>
+      <td><span class="tag tag-adj">&#8593; Ajustado</span></td>
+    </tr>
+
+    <tr class="adj">
+      <td>10</td>
+      <td><div class="pname">Camboriú Full</div><div class="pop">Atui · T77426 — tramo 25–21</div></td>
+      <td>Balneario Camboriú, Brasil</td>
+      <td>8d / 7n</td>
+      <td>$1.804.050 <small>(USD$1.899)</small></td>
+      <td><div class="cuota red">$90.202</div><div class="vdia">$225k/día</div></td>
+      <td>$225.000</td>
+      <td><span class="lib">2 lib.</span></td>
+      <td><span class="tag tag-disco3">3 discos</span></td>
+      <td><span class="tag tag-adj">&#8593; Ajustado</span></td>
+    </tr>
+
+    <tr class="adj">
+      <td>11</td>
+      <td><div class="pname">Camboriú Eco — Hotel 3&#9733;</div><div class="pop">Raitrai · IA_ECO — tramo 20–22</div></td>
+      <td>Balneario Camboriú, Brasil</td>
+      <td>8d / 7n</td>
+      <td>$1.877.200 <small>(USD$1.976)</small></td>
+      <td><div class="cuota red">$93.860</div><div class="vdia">$234k/día</div></td>
+      <td>$234.000</td>
+      <td><span class="lib">2 lib.</span></td>
+      <td><span class="tag tag-disco3">3 discos</span></td>
+      <td><span class="tag tag-adj">&#8593; Ajustado</span></td>
+    </tr>
+
+    <tr class="adj">
+      <td>12</td>
+      <td><div class="pname">Camboriú Eco — Hotel 4&#9733; Brut/Ibis</div><div class="pop">Raitrai · IA_ECO — tramo 20–22</div></td>
+      <td>Balneario Camboriú, Brasil</td>
+      <td>8d / 7n</td>
+      <td>$1.913.300 <small>(USD$2.014)</small></td>
+      <td><div class="cuota red">$95.665</div><div class="vdia">$239k/día</div></td>
+      <td>$239.000</td>
+      <td><span class="lib">2 lib.</span></td>
+      <td><span class="tag tag-disco3">3 discos</span></td>
+      <td><span class="tag tag-adj">&#8593; Ajustado</span></td>
+    </tr>
+
+    <tr class="adj">
+      <td>13</td>
+      <td><div class="pname">Camboriú Full — Hotel 3&#9733;</div><div class="pop">Raitrai · IA_FULL — tramo 20–22</div></td>
+      <td>Balneario Camboriú, Brasil</td>
+      <td>8d / 7n</td>
+      <td>$1.971.250 <small>(USD$2.075)</small></td>
+      <td><div class="cuota red">$98.562</div><div class="vdia">$246k/día</div></td>
+      <td>$246.000</td>
+      <td><span class="lib">2 lib.</span></td>
+      <td><span class="tag tag-disco3">3 discos</span></td>
+      <td><span class="tag tag-adj">&#8593; Ajustado</span></td>
+    </tr>
+
+    <tr class="adj">
+      <td>14</td>
+      <td><div class="pname">Camboriú Full — Hotel 4&#9733;</div><div class="pop">Raitrai · IA_FULL — tramo 20–22</div></td>
+      <td>Balneario Camboriú, Brasil</td>
+      <td>8d / 7n</td>
+      <td>$2.121.350 <small>(USD$2.233)</small></td>
+      <td><div class="cuota red">$106.068</div><div class="vdia">$265k/día</div></td>
+      <td>$265.000</td>
+      <td><span class="lib">2 lib.</span></td>
+      <td><span class="tag tag-disco3">3 discos</span></td>
+      <td><span class="tag tag-adj">&#8593; Ajustado</span></td>
+    </tr>
+
+  </tbody>
+</table>
+```
+
+  </div>
+
+  <!-- VERDICTS -->
+
+  <div class="section-title">Veredicto — Con 21 alumnos</div>
+  <div class="section-sub">Los precios fijos de Funtour se vuelven más competitivos al no penalizar grupos pequeños.</div>
+
+  <div class="verdicts">
+
+```
+<div class="verdict gold">
+  <span class="emoji">&#127919;</span>
+  <div class="vtitle">Mejor relación precio/experiencia</div>
+  <div class="vwinner">Bariloche Terrestre Charter — Funtour</div>
+  <p>Se mantiene en <strong>$49.950/mes y $111k/día</strong>, el más bajo del catálogo. Con 21 alumnos el grupo paga exactamente lo mismo que con 39. Incluye 4 noches de disco, 5 comidas diarias y 2 destinos (Bariloche + Pucón al regreso).</p>
+</div>
+
+<div class="verdict teal">
+  <span class="emoji">&#128737;&#65039;</span>
+  <div class="vtitle">Más seguro para padres tranquilos</div>
+  <div class="vwinner">Camboriú Full Hotel 4★ — Raitrai</div>
+  <p>Sube a <strong>$106.068/mes</strong> con 21 alumnos (tramo 20–22). Sigue siendo el único con seguro médico <strong>USD$150.000 pp.</strong>, ambulancia en discos, rondas médicas diarias y seguro cancelación Any Reason. La red de seguridad más robusta del mercado.</p>
+</div>
+
+<div class="verdict purple">
+  <span class="emoji">&#127881;</span>
+  <div class="vtitle">Más entretenido para el estudiante</div>
+  <div class="vwinner">Camboriú Vuelo Directo — Funtour</div>
+  <p>Con precio fijo en <strong>$82.500/mes</strong>, es ahora más barato que el Atui Camboriú Estudiantil ($82.128 ≈ igual) y que el Raitrai Eco ($93.860+). Suma <strong>4 noches de disco</strong> (más que cualquier alternativa Brasil) y Private Beach exclusiva en Itapema.</p>
+</div>
+```
+
+  </div>
+
+  <div class="disclaimer">
+    <strong>Notas:</strong> Raitrai aplica tramo 20–22 pax (USD × $950 CLP). Atui aplica tramo 25–21 pax (CLP directo para terrestre; USD × $950 para Brasil). Funtour: precio único sin ajuste. Los 2 liberados corresponden a adultos acompañantes designados por el colegio. Precios Funtour vigentes hasta el 30/04/2026. Precios Raitrai y Atui son preventa 2027. Tipo de cambio USD $950 es referencial.
+  </div>
+
+</div>
+</body>
+</html>
